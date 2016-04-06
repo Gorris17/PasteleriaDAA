@@ -10,7 +10,7 @@ package pasteleriadaa;
  * @author FernandoC
  */
 public class PasteleriaDAA {
-
+    int x;
     /**
      * @param args the command line arguments
      */
