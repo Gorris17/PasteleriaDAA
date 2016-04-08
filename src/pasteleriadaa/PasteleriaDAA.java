@@ -16,6 +16,8 @@ public class PasteleriaDAA {
     private static int pasteles; //tipos de pastel (columnas)
     private static int[][] tablaBeneficios;
     private static int[] pedido;
+    private static int[] resultado;
+    private static int beneficio;
     /**
      * @param args the command line arguments
      */
@@ -55,4 +57,20 @@ public class PasteleriaDAA {
         }
     }
     
+    public static void guardar(String fichero){
+        String aux = "";
+        for (int x : resultado) {
+            aux = x + ",";
+        }
+        FileWriter fich = null;
+        try {
+            fich = new FileWriter(fichero);
+            fich.write(aux + "\n");
+            fich.write(beneficio);
+            fich.close();
+        } catch (Exception ex) {
+            System.out.println("Mensaje de la excepcion: " + ex.getMessage());
+        }
+    }
+
 }
