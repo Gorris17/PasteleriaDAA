@@ -54,14 +54,9 @@ public class PasteleriaDAA {
             for (int i = 0; i < pasteleros; i++) {
                 pedido[i] = Integer.parseInt(args[i]);
             }
+            b.close();
         } catch (Exception ex) {
             System.out.println("Mensaje:"+ ex.getMessage());
-        } finally {
-            try {
-                if(b != null) b.close();
-            } catch (Exception ex2){
-                System.out.println("Mensaje 2: " + ex2.getMessage());
-            }
         }
     }
     
