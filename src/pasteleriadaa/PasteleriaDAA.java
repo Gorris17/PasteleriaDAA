@@ -28,11 +28,12 @@ public class PasteleriaDAA {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        cargar(args[0]);
+        cargar("entrada.txt");
         resultado = new int[5];
         beneficio = 30;
-        if (args[1] != null) guardar(args[1]);
-        else mostrarPantalla();
+//        if (args[1] != null) 
+            guardar("salida.txt");
+//        else mostrarPantalla();
     }
     public static void cargar(String fichero) throws FileNotFoundException, IOException{
         //Fichero del que vamos a leer
@@ -47,12 +48,13 @@ public class PasteleriaDAA {
             pasteles = Integer.parseInt(aux[1]);
             tablaBeneficios = new int[pasteleros][pasteles];
             pedido = new int[pasteleros];
-//            while ((aux = b.readLine().split(" ")) != null ){
-//                for (int i = 0; i < pasteles; i++)
-//                    for (int j = 0; j < pasteleros; j++) {
-//                        tablaBeneficios[j][i]=Integer.parseInt(aux[i]);
-//                    }
-//            }
+                for (int i = 0; i < pasteles; i++) {
+                    aux = b.readLine().split(" ");
+                    for (int j = 0; j < pasteleros; j++) {
+                        tablaBeneficios[i][j]=Integer.parseInt(aux[i]);
+                    }
+                }
+            }
             aux = b.readLine().split(" ");
             System.out.println("funciona3");
             for (int i = 0; i < pasteleros; i++) {
