@@ -4,8 +4,13 @@
  * and open the template in the editor.
  */
 package pasteleriadaa;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 /**
  *
@@ -27,25 +32,23 @@ public class PasteleriaDAA {
         if (args[1] != null) guardar(args[1]);
         else mostrarPantalla();
     }
-    public static void cargar(String fichero){
+    public static void cargar(String fichero) throws FileNotFoundException, IOException{
         //Fichero del que vamos a leer
-        File f = new File(fichero);
-        Scanner s = null;
         String[] args;
+        FileReader f = new FileReader(fichero);
+        BufferedReader b = new BufferedReader(f);
         try{
             //Leemos el contenido el fichero
-            s = new Scanner (f);
-
-            args = s.nextLine().split(" ");
+            args = b.readLine().split(" ");
             pasteleros = Integer.parseInt(args[0]);
             pasteles = Integer.parseInt(args[1]);
 
             for (int i = 0; i < pasteles; i++)
                 for (int j = 0; j < pasteleros; j++) {
-                    args=s.nextLine().split(" ");
+                    args = b.readLine().split(" ");
                     tablaBeneficios[j][i]=Integer.parseInt(args[i]);
                 }
-            args=s.nextLine().split(" ");
+            args = b.readLine().split(" ");
             for (int i = 0; i < pasteleros; i++) {
                 pedido[i] = Integer.parseInt(args[i]);
             }
@@ -53,26 +56,28 @@ public class PasteleriaDAA {
             System.out.println("Mensaje:"+ ex.getMessage());
         } finally {
             try {
-                if(s != null) s.close();
+                if(b != null) b.close();
             } catch (Exception ex2){
                 System.out.println("Mensaje 2: " + ex2.getMessage());
             }
         }
     }
     
-    public static void guardar(String fichero){
-        String aux = "";
-        for (int x : resultado) {
-            aux = x + ",";
-        }
-        FileWriter fich = null;
-        try {
-            fich = new FileWriter(fichero);
-            fich.write(aux + "\n");
-            fich.write(beneficio);
-            fich.close();
-        } catch (Exception ex) {
-            System.out.println("Mensaje de la excepcion: " + ex.getMessage());
+    public static void guardar(String fichero) throws IOException{
+        //Comprobamos si el fichero existe
+        File archivo = new File(fichero);
+        BufferedWriter bw;
+        if (archivo.exists()) {
+            System.err.println("El fichero de salida ya existe");
+        } else {
+            try{
+                bw = new BufferedWriter(new FileWriter(archivo));
+                bw.write(resultado.toString() + "\n");
+                bw.write(beneficio);
+                bw.close();
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
         }
     }
 
