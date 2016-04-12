@@ -22,7 +22,10 @@ public class PasteleriaDAA {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        cargar(args[0]);
+        //algoritmo
+        if (args[1] != null) guardar(args[1]);
+        else mostrarPantalla();
     }
     public static void cargar(String fichero){
         //Fichero del que vamos a leer
@@ -71,6 +74,10 @@ public class PasteleriaDAA {
         } catch (Exception ex) {
             System.out.println("Mensaje de la excepcion: " + ex.getMessage());
         }
+    }
+
+    private static void mostrarPantalla() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
