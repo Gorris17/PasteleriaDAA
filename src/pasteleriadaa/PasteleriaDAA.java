@@ -25,8 +25,9 @@ public class PasteleriaDAA {
     private static int beneficio;
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         cargar(args[0]);
         //algoritmo
         if (args[1] != null) guardar(args[1]);
