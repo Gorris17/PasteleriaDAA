@@ -36,26 +36,31 @@ public class PasteleriaDAA {
     }
     public static void cargar(String fichero) throws FileNotFoundException, IOException{
         //Fichero del que vamos a leer
-        String[] args;
+        String[] aux;
         try{
-        FileReader f = new FileReader(fichero);
-        BufferedReader b = new BufferedReader(f);
+            FileReader f = new FileReader(fichero);
+            BufferedReader b = new BufferedReader(f);
         
             //Leemos el contenido el fichero
-            args = b.readLine().split(" ");
-            pasteleros = Integer.parseInt(args[0]);
-            pasteles = Integer.parseInt(args[1]);
-
-            for (int i = 0; i < pasteles; i++)
-                for (int j = 0; j < pasteleros; j++) {
-                    args = b.readLine().split(" ");
-                    tablaBeneficios[j][i]=Integer.parseInt(args[i]);
-                }
-            args = b.readLine().split(" ");
+            aux = b.readLine().split(" ");
+            pasteleros = Integer.parseInt(aux[0]);
+            pasteles = Integer.parseInt(aux[1]);
+            tablaBeneficios = new int[pasteleros][pasteles];
+            pedido = new int[pasteleros];
+//            while ((aux = b.readLine().split(" ")) != null ){
+//                for (int i = 0; i < pasteles; i++)
+//                    for (int j = 0; j < pasteleros; j++) {
+//                        tablaBeneficios[j][i]=Integer.parseInt(aux[i]);
+//                    }
+//            }
+            aux = b.readLine().split(" ");
+            System.out.println("funciona3");
             for (int i = 0; i < pasteleros; i++) {
-                pedido[i] = Integer.parseInt(args[i]);
+                pedido[i] = Integer.parseInt(aux[i]);
             }
+            System.out.println("funciona");
             b.close();
+            System.out.println("funciona2");
         } catch (Exception ex) {
             System.out.println("Error Entrada: "+ ex.getMessage());
         }
