@@ -29,7 +29,8 @@ public class PasteleriaDAA {
      */
     public static void main(String[] args) throws IOException {
         cargar(args[0]);
-        //algoritmo
+        resultado = new int[5];
+        beneficio = 30;
         if (args[1] != null) guardar(args[1]);
         else mostrarPantalla();
     }
@@ -56,7 +57,7 @@ public class PasteleriaDAA {
             }
             b.close();
         } catch (Exception ex) {
-            System.out.println("Mensaje:"+ ex.getMessage());
+            System.out.println("Error Entrada: "+ ex.getMessage());
         }
     }
     
@@ -73,7 +74,7 @@ public class PasteleriaDAA {
                 bw.write(beneficio);
                 bw.close();
             } catch (Exception ex) {
-                System.err.println(ex.getMessage());
+                System.err.println("Error Salida: " + ex.getMessage());
             }
         }
     }
