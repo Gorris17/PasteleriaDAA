@@ -36,9 +36,10 @@ public class PasteleriaDAA {
     public static void cargar(String fichero) throws FileNotFoundException, IOException{
         //Fichero del que vamos a leer
         String[] args;
+        try{
         FileReader f = new FileReader(fichero);
         BufferedReader b = new BufferedReader(f);
-        try{
+        
             //Leemos el contenido el fichero
             args = b.readLine().split(" ");
             pasteleros = Integer.parseInt(args[0]);
