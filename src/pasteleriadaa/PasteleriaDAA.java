@@ -31,9 +31,9 @@ public class PasteleriaDAA {
         cargar("entrada.txt");
         resultado = new int[]{1,1,2,3,1};
         beneficio = 30;
-//        if (args[1] != null) 
+        if (args[1] != null) 
             guardar("salidda.txt");
-//        else mostrarPantalla();
+        else mostrarPantalla();
     }
     public static void cargar(String fichero) throws FileNotFoundException, IOException{
         //Fichero del que vamos a leer
@@ -55,7 +55,6 @@ public class PasteleriaDAA {
                 }
             }
             aux = b.readLine().split(" ");
-            System.out.println("funciona3");
             for (int i = 0; i < pasteleros; i++) {
                 pedido[i] = Integer.parseInt(aux[i]);
             }
@@ -77,8 +76,9 @@ public class PasteleriaDAA {
                 for (int i = 0; i < pedido.length; i++) {
                     bw.write(resultado[i] + ",");
                 }
-                bw.write("\n");
+                bw.newLine();
                 bw.write(beneficio);
+                System.out.println("funciona3");
                 bw.close();
             } catch (Exception ex) {
                 System.err.println("Error Salida: " + ex.getMessage());
@@ -87,7 +87,11 @@ public class PasteleriaDAA {
     }
 
     private static void mostrarPantalla() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for (int i = 0; i < pedido.length-1; i++) {
+            System.out.print(resultado[i] + ",");
+        }
+        System.out.println(resultado[pedido.length-1]);
+        System.out.println(beneficio);
     }
 
 }
