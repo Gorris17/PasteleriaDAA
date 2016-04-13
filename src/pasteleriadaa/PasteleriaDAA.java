@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pasteleriadaa;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,10 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-/**
- *
- * @author FernandoC
- */
+
 public class PasteleriaDAA {
     private static int  pasteleros; //pasteleros (filas)
     private static int pasteles; //tipos de pastel (columnas)
@@ -23,10 +16,7 @@ public class PasteleriaDAA {
     private static int[] pedido;
     private static int[] resultado;
     private static int beneficio;
-    /**
-     * @param args the command line arguments
-     * @throws java.io.IOException
-     */
+
     public static void main(String[] args) throws IOException {
         cargar(args[0]);
         resultado = new int[]{1,1,2,3,1};
@@ -57,7 +47,7 @@ public class PasteleriaDAA {
                 pedido[i] = Integer.parseInt(aux[i]);
             }
             b.close();
-        } catch (Exception ex) {
+        } catch (IOException | NumberFormatException ex) {
             System.out.println("Error Entrada: "+ ex.getMessage());
         }
     }
