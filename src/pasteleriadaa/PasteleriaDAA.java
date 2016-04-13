@@ -29,10 +29,10 @@ public class PasteleriaDAA {
      */
     public static void main(String[] args) throws IOException {
         cargar("entrada.txt");
-        resultado = new int[5];
+        resultado = new int[]{1,1,2,3,1};
         beneficio = 30;
 //        if (args[1] != null) 
-            guardar("salida.txt");
+            guardar("salidda.txt");
 //        else mostrarPantalla();
     }
     public static void cargar(String fichero) throws FileNotFoundException, IOException{
@@ -48,11 +48,10 @@ public class PasteleriaDAA {
             pasteles = Integer.parseInt(aux[1]);
             tablaBeneficios = new int[pasteleros][pasteles];
             pedido = new int[pasteleros];
-                for (int i = 0; i < pasteles; i++) {
-                    aux = b.readLine().split(" ");
-                    for (int j = 0; j < pasteleros; j++) {
-                        tablaBeneficios[i][j]=Integer.parseInt(aux[i]);
-                    }
+            for (int i = 0; i < pasteleros; i++) {
+                aux = b.readLine().split(" ");
+                for (int j = 0; j < pasteles; j++) {
+                    tablaBeneficios[i][j]=Integer.parseInt(aux[j]);
                 }
             }
             aux = b.readLine().split(" ");
@@ -60,9 +59,7 @@ public class PasteleriaDAA {
             for (int i = 0; i < pasteleros; i++) {
                 pedido[i] = Integer.parseInt(aux[i]);
             }
-            System.out.println("funciona");
             b.close();
-            System.out.println("funciona2");
         } catch (Exception ex) {
             System.out.println("Error Entrada: "+ ex.getMessage());
         }
@@ -77,7 +74,10 @@ public class PasteleriaDAA {
         } else {
             try{
                 bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(resultado.toString() + "\n");
+                for (int i = 0; i < pedido.length; i++) {
+                    bw.write(resultado[i] + ",");
+                }
+                bw.write("\n");
                 bw.write(beneficio);
                 bw.close();
             } catch (Exception ex) {
