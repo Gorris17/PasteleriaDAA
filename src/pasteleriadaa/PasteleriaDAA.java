@@ -17,12 +17,15 @@ public class PasteleriaDAA {
     private static int beneficio;
 
     public static void main(String[] args) throws IOException {
-        cargar(args[0]);
-        resultado = new int[]{1,1,2,3,1};
-        beneficio = 30;
-        if (args.length == 2) 
-            guardar(args[1]);
-        else mostrarPantalla();
+        if (args.length > 0) {
+           cargar(args[0]);
+            resultado = new int[]{1,1,2,3,1};
+            beneficio = 30;
+            if (args.length == 2) 
+                guardar(args[1]);
+            else mostrarPantalla(); 
+        } else System.err.println("Introduce fichero de entrada.");
+        
     }
     public static void cargar(String fichero) throws FileNotFoundException, IOException{
         String[] aux;
