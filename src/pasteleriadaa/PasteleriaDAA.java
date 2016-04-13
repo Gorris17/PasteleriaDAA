@@ -28,11 +28,11 @@ public class PasteleriaDAA {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        cargar("entrada.txt");
+        cargar(args[0]);
         resultado = new int[]{1,1,2,3,1};
         beneficio = 30;
-        if (args.length == 1) 
-            guardar("salidda.txt");
+        if (args.length == 2) 
+            guardar(args[1]);
         else mostrarPantalla();
     }
     public static void cargar(String fichero) throws FileNotFoundException, IOException{
@@ -71,13 +71,12 @@ public class PasteleriaDAA {
         } else {
             try{
                 bw = new BufferedWriter(new FileWriter(archivo));
-                for (int i = 0; i < pedido.length - 1; i++) {
+                for (int i = 0; i < resultado.length - 1; i++) {
                     bw.write(resultado[i] + ",");
                 }
-                bw.write(resultado[pedido.length - 1]);
+                bw.write(Integer.toString(resultado[resultado.length - 1]));
                 bw.newLine();                
-                bw.write(beneficio);
-                System.out.println("funciona3");
+                bw.write(Integer.toString(beneficio));
                 bw.close();
             } catch (Exception ex) {
                 System.err.println("Error Salida: " + ex.getMessage());
@@ -86,10 +85,10 @@ public class PasteleriaDAA {
     }
 
     private static void mostrarPantalla() {
-        for (int i = 0; i < pedido.length-1; i++) {
+        for (int i = 0; i < resultado.length-1; i++) {
             System.out.print(resultado[i] + ",");
         }
-        System.out.println(resultado[pedido.length-1]);
+        System.out.println(resultado[resultado.length-1]);
         System.out.println(beneficio);
     }
 
