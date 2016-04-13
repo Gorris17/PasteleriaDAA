@@ -31,18 +31,16 @@ public class PasteleriaDAA {
         cargar("entrada.txt");
         resultado = new int[]{1,1,2,3,1};
         beneficio = 30;
-        if (args[1] != null) 
+        if (args.length == 1) 
             guardar("salidda.txt");
         else mostrarPantalla();
     }
     public static void cargar(String fichero) throws FileNotFoundException, IOException{
-        //Fichero del que vamos a leer
         String[] aux;
         try{
             FileReader f = new FileReader(fichero);
             BufferedReader b = new BufferedReader(f);
-        
-            //Leemos el contenido el fichero
+
             aux = b.readLine().split(" ");
             pasteleros = Integer.parseInt(aux[0]);
             pasteles = Integer.parseInt(aux[1]);
@@ -73,10 +71,11 @@ public class PasteleriaDAA {
         } else {
             try{
                 bw = new BufferedWriter(new FileWriter(archivo));
-                for (int i = 0; i < pedido.length; i++) {
+                for (int i = 0; i < pedido.length - 1; i++) {
                     bw.write(resultado[i] + ",");
                 }
-                bw.newLine();
+                bw.write(resultado[pedido.length - 1]);
+                bw.newLine();                
                 bw.write(beneficio);
                 System.out.println("funciona3");
                 bw.close();
