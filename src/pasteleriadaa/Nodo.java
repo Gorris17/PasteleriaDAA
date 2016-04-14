@@ -7,28 +7,13 @@ package pasteleriadaa;
 
 /**
  *
- * @author FernandoC
+ * @author hola
  */
-public class Nodo implements Comparable <Nodo>{
-    private int beneficio;
-    private int nivel=0;
-    private int pastelero;
-    
-    
-    public Nodo(int pas){
-        this.pastelero=pas;
-        beneficio=0;
-        
-    }
-    
-    public void eliminarNodo(Nodo n){
-        
-    }
+public class Nodo implements Comparable <Nodo> {
 
     @Override
-    public int compareTo(Nodo o) {
-     return beneficio;
+    public int compareTo(Nodo t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
     
 }
