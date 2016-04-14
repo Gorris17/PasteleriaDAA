@@ -87,6 +87,7 @@ public class PasteleriaDAA {
         System.out.println(resultado[resultado.length-1]);
         System.out.println(beneficio);
     }
+
     
     private void RyP(){
         int cotaInferior=0;
@@ -97,7 +98,7 @@ public class PasteleriaDAA {
             cotaInferior+=tablaBeneficios[i][pedido[i]];
         }
         PriorityQueue q;
-        q = new PriorityQueue(Nodo);
+        q = new PriorityQueue(Nodo n);
     
         }
         
