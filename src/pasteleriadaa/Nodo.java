@@ -17,6 +17,7 @@ public class Nodo implements Comparable <Nodo>{
     
     public Nodo(int pas){
         this.pastelero=pas;
+        beneficio=0;
         
     }
     
