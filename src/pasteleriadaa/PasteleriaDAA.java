@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class PasteleriaDAA {
     private static int  pasteleros; //pasteleros (filas)
@@ -27,6 +29,8 @@ public class PasteleriaDAA {
         } else System.err.println("Introduce fichero de entrada.");
         
     }
+    
+    
     public static void cargar(String fichero) throws FileNotFoundException, IOException{
         String[] aux;
         try{
@@ -83,5 +87,29 @@ public class PasteleriaDAA {
         System.out.println(resultado[resultado.length-1]);
         System.out.println(beneficio);
     }
+    
+    private void RyP(){
+        int cotaInferior=0;
+        int[] sol=new int[pasteleros];
+        int[] solFin= new int[pasteleros];
+        for (int i = 0; i < pasteleros; i++) {
+            solFin[i]=i;
+            cotaInferior+=tablaBeneficios[i][pedido[i]];
+        }
+        PriorityQueue q;
+        q = new PriorityQueue(Nodo);
+    
+        }
+        
+    }
 
 }
+
+
+//
+//        int cotaInferior=0;
+//        resultado= new int[pasteleros];
+//        for (int i = 0; i < pasteleros; i++){
+//            cotaInferior+=tablaBeneficios[i][pedido[i]];  
+//            resultado[i]=i;
+//        }
