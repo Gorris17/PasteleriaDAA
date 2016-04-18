@@ -8,21 +8,21 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 public class PasteleriaDAA {
-    private static int  pasteleros; //pasteleros (filas)
-    private static int pasteles; //tipos de pastel (columnas)
-    private static int[][] tablaBeneficios;
-    private static int[] pedido;
-    private static int[] resultado;
-    private static int beneficio;
+    private static int          pasteleros; //pasteleros (filas)
+    private static int          pasteles; //tipos de pastel (columnas)
+    private static int[][]      tablaBeneficios;
+    private static int[]        pedido;
+    private static LinkedList<Integer>        resultado;
+    private static int          beneficio;
 
     public static void main(String[] args) throws IOException {
         if (args.length > 0) {
-           cargar(args[0]);
-            resultado = new int[]{1,1,2,3,1};
-            beneficio = 30;
+            cargar(args[0]);
+            RyP();
             if (args.length == 2) 
                 guardar(args[1]);
             else mostrarPantalla(); 
@@ -67,10 +67,10 @@ public class PasteleriaDAA {
         } else {
             try{
                 bw = new BufferedWriter(new FileWriter(archivo));
-                for (int i = 0; i < resultado.length - 1; i++) {
-                    bw.write(resultado[i] + ",");
+                for (int i = 0; i < resultado.size() - 1; i++) {
+                    bw.write(resultado.get(i) + ",");
                 }
-                bw.write(Integer.toString(resultado[resultado.length - 1]));
+                bw.write(Integer.toString(resultado.get(resultado.size() - 1)));
                 bw.newLine();                
                 bw.write(Integer.toString(beneficio));
                 bw.close();
@@ -81,36 +81,79 @@ public class PasteleriaDAA {
     }
 
     private static void mostrarPantalla() {
-        for (int i = 0; i < resultado.length-1; i++) {
-            System.out.print(resultado[i] + ",");
+        for (int i = 0; i < resultado.size()-1; i++) {
+            System.out.print(resultado.get(i) + ",");
         }
-        System.out.println(resultado[resultado.length-1]);
+        System.out.println(resultado.get(resultado.size()-1));
         System.out.println(beneficio);
     }
 
     
-    private void RyP(){
-        int cotaInferior=0;
-        int[] sol=new int[pasteleros];
-        int[] solFin= new int[pasteleros];
+    public static void RyP(){
+        int     cotaInferior  =   0;
+        Nodo    sol           =   new Nodo();
+        Nodo    solFin        =   new Nodo();
+        
         for (int i = 0; i < pasteleros; i++) {
-            solFin[i]=i;
-            cotaInferior+=tablaBeneficios[i][pedido[i]];
-        }
-        PriorityQueue q;
-        q = new PriorityQueue(Nodo n);
-    
+            solFin.getSol().add(i+1);
+            cotaInferior+=tablaBeneficios[i][pedido[i]-1];
         }
         
+        PriorityQueue q = new PriorityQueue();
+        q.add(sol);
+        while (!q.isEmpty()) {
+            sol = (Nodo) q.peek();
+            q.remove();  
+            if (esSolucion(sol)) {
+                if (sol.getBeneficio() > cotaInferior) {
+                    solFin=sol;
+                    cotaInferior=sol.getBeneficio();
+                }
+                else if (cotaSuperior(sol) > cotaInferior) {
+                    for (Nodo n : complecciones(sol)) {
+                        if (cotaSuperior(n)> cotaInferior && esFactible(n)) {
+                            q.add(n);
+                        }
+                    }
+                }
+            }  
+        }
+        beneficio=solFin.getBeneficio();
+        resultado = solFin.getSol();
     }
 
+    private static boolean esSolucion(Nodo sol) {
+        return sol.getNivel()==pasteleros;
+    }
+
+    private static int cotaSuperior(Nodo sol) {
+        int aux = sol.getBeneficio();
+        for (int i = sol.getNivel(); i < pasteleros; i++) {
+            aux+=tablaBeneficios[i][pedido[i]];
+        }
+        return aux;
+    }
+
+    private static LinkedList<Nodo> complecciones(Nodo sol) {
+        LinkedList<Nodo> aux = new LinkedList();
+        int nivel = sol.getNivel() + 1;
+        int beneficio = sol.getBeneficio() + sol.getPeso();
+        for (int i = 1; i <= pasteleros; i++) {   
+            if (!sol.getSol().contains(i)){
+                int peso = tablaBeneficios[i][pedido[nivel - 1]]; //revisar el nivel
+                int nombre = i;
+                Nodo n = new Nodo(nivel, beneficio, peso, nombre);
+                LinkedList<Integer> solucion = sol.getSol();
+                solucion.add(i);
+                n.setSol(solucion);
+                aux.add(n);
+            }
+        }
+        return aux;
+    }
+
+    private static boolean esFactible(Nodo n) {
+        return true;
+    }
+        
 }
-
-
-//
-//        int cotaInferior=0;
-//        resultado= new int[pasteleros];
-//        for (int i = 0; i < pasteleros; i++){
-//            cotaInferior+=tablaBeneficios[i][pedido[i]];  
-//            resultado[i]=i;
-//        }
