@@ -15,14 +15,12 @@ public class PasteleriaDAA {
     public static void main(String[] args) throws IOException {
         if (args.length > 0) {
             cargar(args[0]);
-            RyP();
+            RyP ();
             if (args.length == 2) 
                 guardar(args[1]);
             else mostrarPantalla(); 
         } else System.err.println("Introduce fichero de entrada.");
-        
     }
-    
     
     public static void cargar(String fichero) throws FileNotFoundException, IOException{
         String[] aux;
@@ -96,10 +94,9 @@ public class PasteleriaDAA {
         q.add(sol);
         
         while (!q.isEmpty()) {
-            sol = (Nodo) q.peek();
-            q.remove();  
+            sol = (Nodo) q.remove();  
             if (esSolucion(sol)) {
-                if (sol.getBeneficio() > cotaInferior) {
+                if (cotaSuperior(sol) > cotaInferior) {
                     solFin=sol;
                     cotaInferior=sol.getBeneficio();
                 }
