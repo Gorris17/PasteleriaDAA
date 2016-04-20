@@ -40,7 +40,7 @@ public class Nodo implements Comparable <Nodo>{
 
     @Override
     public int compareTo(Nodo t) {
-        return (this.beneficio>=t.beneficio)? 1 : -1;
+        return this.beneficio - t.getBeneficio();
     }
 
     public int getNivel() {

@@ -101,6 +101,7 @@ public class PasteleriaDAA {
         
         PriorityQueue q = new PriorityQueue();
         q.add(sol);
+        
         while (!q.isEmpty()) {
             sol = (Nodo) q.peek();
             q.remove();  
@@ -127,8 +128,10 @@ public class PasteleriaDAA {
 
     private static int cotaSuperior(Nodo sol) {
         int aux = sol.getBeneficio() + sol.getPeso();
-        for (int i = sol.getNivel(); i < pasteleros; i++) {
-            aux+=tablaBeneficios[i][pedido[i]-1];
+        for (int i = 0; i < pasteleros; i++) {
+            if (!sol.getSol().contains(i)) {
+                aux+=tablaBeneficios[i][pedido[i]-1];
+            }
         }
         return aux;
     }
@@ -139,7 +142,7 @@ public class PasteleriaDAA {
         int beneficio = sol.getBeneficio() + sol.getPeso();
         for (int i = 0; i < pasteleros; i++) {   
             if (!sol.getSol().contains(i)){
-                int peso = tablaBeneficios[i][pedido[nivel - 1]]; //revisar el nivel
+                int peso = tablaBeneficios[i][pedido[nivel - 1]-1]; //revisar el nivel
                 int nombre = i+1;
                 Nodo n = new Nodo(nivel, beneficio, peso, nombre);
                 LinkedList<Integer> solucion = new LinkedList();
