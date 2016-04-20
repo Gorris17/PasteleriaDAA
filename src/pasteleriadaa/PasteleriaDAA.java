@@ -95,7 +95,7 @@ public class PasteleriaDAA {
         Nodo    solFin        =   new Nodo();
         
         for (int i = 0; i < pasteleros; i++) {
-            solFin.getSol().add(i+1);
+            solFin.getSol().add(i);
             cotaInferior+=tablaBeneficios[i][pedido[i]-1];
         }
         
