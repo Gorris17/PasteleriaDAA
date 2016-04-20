@@ -62,9 +62,9 @@ public class PasteleriaDAA {
         //Comprobamos si el fichero existe
         File archivo = new File(fichero);
         BufferedWriter bw;
-        if (archivo.exists()) {
-            System.err.println("El fichero de salida ya existe");
-        } else {
+//        if (archivo.exists()) {
+//            System.err.println("El fichero de salida ya existe");
+//        } else {
             try{
                 bw = new BufferedWriter(new FileWriter(archivo));
                 for (int i = 0; i < resultado.size() - 1; i++) {
@@ -77,7 +77,7 @@ public class PasteleriaDAA {
             } catch (Exception ex) {
                 System.err.println("Error Salida: " + ex.getMessage());
             }
-        }
+//        }
     }
 
     private static void mostrarPantalla() {
@@ -109,14 +109,13 @@ public class PasteleriaDAA {
                     solFin=sol;
                     cotaInferior=sol.getBeneficio();
                 }
-                else if (cotaSuperior(sol) > cotaInferior) {
-                    for (Nodo n : complecciones(sol)) {
-                        if (cotaSuperior(n)> cotaInferior && esFactible(n)) {
-                            q.add(n);
-                        }
+            } else if (cotaSuperior(sol) >= cotaInferior) {
+                for (Nodo n : complecciones(sol)) {
+                    if (cotaSuperior(n)>= cotaInferior && esFactible(n)) {
+                        q.add(n);
                     }
                 }
-            }  
+            } 
         }
         beneficio=solFin.getBeneficio();
         resultado = solFin.getSol();
@@ -127,9 +126,9 @@ public class PasteleriaDAA {
     }
 
     private static int cotaSuperior(Nodo sol) {
-        int aux = sol.getBeneficio();
+        int aux = sol.getBeneficio() + sol.getPeso();
         for (int i = sol.getNivel(); i < pasteleros; i++) {
-            aux+=tablaBeneficios[i][pedido[i]];
+            aux+=tablaBeneficios[i][pedido[i]-1];
         }
         return aux;
     }
@@ -138,12 +137,13 @@ public class PasteleriaDAA {
         LinkedList<Nodo> aux = new LinkedList();
         int nivel = sol.getNivel() + 1;
         int beneficio = sol.getBeneficio() + sol.getPeso();
-        for (int i = 1; i <= pasteleros; i++) {   
+        for (int i = 0; i < pasteleros; i++) {   
             if (!sol.getSol().contains(i)){
                 int peso = tablaBeneficios[i][pedido[nivel - 1]]; //revisar el nivel
-                int nombre = i;
+                int nombre = i+1;
                 Nodo n = new Nodo(nivel, beneficio, peso, nombre);
-                LinkedList<Integer> solucion = sol.getSol();
+                LinkedList<Integer> solucion = new LinkedList();
+                solucion = (LinkedList<Integer>) sol.getSol().clone();
                 solucion.add(i);
                 n.setSol(solucion);
                 aux.add(n);
