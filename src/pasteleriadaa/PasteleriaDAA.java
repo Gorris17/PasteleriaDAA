@@ -68,9 +68,9 @@ public class PasteleriaDAA {
             try{
                 bw = new BufferedWriter(new FileWriter(archivo));
                 for (int i = 0; i < resultado.size() - 1; i++) {
-                    bw.write(resultado.get(i) + ",");
+                    bw.write(resultado.get(i)+1 + ",");
                 }
-                bw.write(Integer.toString(resultado.get(resultado.size() - 1)));
+                bw.write(Integer.toString(resultado.get(resultado.size() - 1)+1));
                 bw.newLine();                
                 bw.write(Integer.toString(beneficio));
                 bw.close();
@@ -118,7 +118,7 @@ public class PasteleriaDAA {
                 }
             } 
         }
-        beneficio=solFin.getBeneficio();
+        beneficio = solFin.getBeneficio() + sol.getPeso();
         resultado = solFin.getSol();
     }
 
@@ -129,8 +129,9 @@ public class PasteleriaDAA {
     private static int cotaSuperior(Nodo sol) {
         int aux = sol.getBeneficio() + sol.getPeso();
         for (int i = 0; i < pasteleros; i++) {
-            if (!sol.getSol().contains(i)) {
-                aux+=tablaBeneficios[i][pedido[i]-1];
+            for (int j = sol.getNivel(); j < pasteleros; j++) {
+                if (!sol.getSol().contains(i)) 
+                aux+=tablaBeneficios[i][pedido[j]-1];
             }
         }
         return aux;
