@@ -62,9 +62,9 @@ public class PasteleriaDAA {
         //Comprobamos si el fichero existe
         File archivo = new File(fichero);
         BufferedWriter bw;
-//        if (archivo.exists()) {
-//            System.err.println("El fichero de salida ya existe");
-//        } else {
+        if (archivo.exists()) {
+            System.err.println("El fichero de salida ya existe");
+        } else {
             try{
                 bw = new BufferedWriter(new FileWriter(archivo));
                 for (int i = 0; i < resultado.size() - 1; i++) {
@@ -77,14 +77,14 @@ public class PasteleriaDAA {
             } catch (Exception ex) {
                 System.err.println("Error Salida: " + ex.getMessage());
             }
-//        }
+        }
     }
 
     private static void mostrarPantalla() {
         for (int i = 0; i < resultado.size()-1; i++) {
-            System.out.print(resultado.get(i) + ",");
+            System.out.print(resultado.get(i)+1 + ",");
         }
-        System.out.println(resultado.get(resultado.size()-1));
+        System.out.println(resultado.get(resultado.size()-1)+1);
         System.out.println(beneficio);
     }
 
