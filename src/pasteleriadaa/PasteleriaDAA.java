@@ -115,7 +115,14 @@ public class PasteleriaDAA {
     }
 
     private static int cotaSuperior(Nodo sol) {
-        
+        int aux = sol.getBeneficio() + sol.getPeso();
+        for (int i = 0; i < pasteleros; i++) {
+            for (int j = sol.getNivel(); j < pasteleros; j++) {
+                if (!sol.getSol().contains(i)) 
+                aux+=tablaBeneficios[i][pedido[j]-1];
+            }
+        }
+        return aux;
     }
 
     private static LinkedList<Nodo> complecciones(Nodo sol) {
