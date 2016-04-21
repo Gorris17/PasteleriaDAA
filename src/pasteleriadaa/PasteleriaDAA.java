@@ -85,10 +85,8 @@ public class PasteleriaDAA {
         Nodo    sol           =   new Nodo();
         Nodo    solFin        =   new Nodo();
         
-        for (int i = 0; i < pasteleros; i++) {
-            solFin.getSol().add(i);
-            cotaInferior+=tablaBeneficios[i][pedido[i]-1];
-        }
+        solFin = generarSol();
+        cotaInferior = cotaSuperior(solFin);
         
         PriorityQueue q = new PriorityQueue();
         q.add(sol);
@@ -98,33 +96,26 @@ public class PasteleriaDAA {
             if (esSolucion(sol)) {
                 if (cotaSuperior(sol) > cotaInferior) {
                     solFin=sol;
-                    cotaInferior=sol.getBeneficio();
+                    cotaInferior=cotaSuperior(sol);
                 }
-            } else if (cotaSuperior(sol) >= cotaInferior) {
+            } else if (cotaSuperior(sol) > cotaInferior) {
                 for (Nodo n : complecciones(sol)) {
-                    if (cotaSuperior(n)>= cotaInferior && esFactible(n)) {
+                    if (cotaSuperior(n)> cotaInferior && esFactible(n)) {
                         q.add(n);
                     }
                 }
             } 
         }
-        beneficio = solFin.getBeneficio() + sol.getPeso();
+        beneficio = cotaSuperior(solFin);
         resultado = solFin.getSol();
     }
 
     private static boolean esSolucion(Nodo sol) {
-        return sol.getNivel()==pasteleros;
+        return sol.getSol().size()==pasteleros;
     }
 
     private static int cotaSuperior(Nodo sol) {
-        int aux = sol.getBeneficio() + sol.getPeso();
-        for (int i = 0; i < pasteleros; i++) {
-            for (int j = sol.getNivel(); j < pasteleros; j++) {
-                if (!sol.getSol().contains(i)) 
-                aux+=tablaBeneficios[i][pedido[j]-1];
-            }
-        }
-        return aux;
+        
     }
 
     private static LinkedList<Nodo> complecciones(Nodo sol) {
@@ -149,5 +140,19 @@ public class PasteleriaDAA {
     private static boolean esFactible(Nodo n) {
         return true;
     }
-        
+
+    private static Nodo generarSol() {
+        Nodo nodo = new Nodo();
+        for (int i = 0; i < pasteleros; i++) {
+            nodo.getSol().add(i);
+        }
+        nodo.setNivel(pasteleros);
+        nodo.setPeso(tablaBeneficios[nodo.getSol().getLast()][pedido[pedido.length-1]-1]);
+        beneficio = 0;
+        for (int i = 0; i < pasteleros-1; i++) {
+            beneficio+=tablaBeneficios[i][pedido[i]-1];
+        }
+        nodo.setBeneficio(beneficio);
+        return nodo;
+    }    
 }
