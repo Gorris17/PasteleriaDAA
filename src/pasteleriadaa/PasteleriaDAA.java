@@ -81,12 +81,10 @@ public class PasteleriaDAA {
 
     
     public static void RyP(){
-        int     cotaInferior  =   0;
-        Nodo    sol           =   new Nodo();
-        Nodo    solFin        =   new Nodo();
         
-        solFin = generarSol();
-        cotaInferior = cotaSuperior(solFin);
+        Nodo    sol           =   new Nodo();
+        Nodo    solFin        =   generarSol();
+        int     cotaInferior  =   cotaSuperior(solFin);
         
         PriorityQueue q = new PriorityQueue();
         q.add(sol);
@@ -94,16 +92,16 @@ public class PasteleriaDAA {
         while (!q.isEmpty()) {
             sol = (Nodo) q.remove();  
             if (esSolucion(sol)) {
-                if (cotaSuperior(sol) > cotaInferior) {
+                if (cotaSuperior(sol) >= cotaInferior) {
                     solFin=sol;
-                    cotaInferior=cotaSuperior(sol);
                 }
-            } else if (cotaSuperior(sol) > cotaInferior) {
+            } else if (cotaSuperior(sol) >= cotaInferior) {
                 for (Nodo n : complecciones(sol)) {
-                    if (cotaSuperior(n)> cotaInferior && esFactible(n)) {
+                    if (cotaSuperior(n)>= cotaInferior && esFactible(n)) {
                         q.add(n);
                     }
                 }
+                cotaInferior = cotaSuperior(sol);
             } 
         }
         beneficio = cotaSuperior(solFin);
@@ -136,14 +134,13 @@ public class PasteleriaDAA {
     private static LinkedList<Nodo> complecciones(Nodo sol) {
         LinkedList<Nodo> aux = new LinkedList();
         int nivel = sol.getNivel() + 1;
-        int beneficio = sol.getBeneficio() + sol.getPeso();
+        int benef = sol.getBeneficio() + sol.getPeso();
         for (int i = 0; i < pasteleros; i++) {   
             if (!sol.getSol().contains(i)){
-                int peso = tablaBeneficios[i][pedido[nivel - 1]-1]; //revisar el nivel
+                int peso = tablaBeneficios[i][pedido[nivel - 1]-1];
                 int nombre = i+1;
-                Nodo n = new Nodo(nivel, beneficio, peso, nombre);
-                LinkedList<Integer> solucion = new LinkedList();
-                solucion = (LinkedList<Integer>) sol.getSol().clone();
+                Nodo n = new Nodo(nivel, benef, peso, nombre);
+                LinkedList<Integer> solucion = (LinkedList<Integer>) sol.getSol().clone();
                 solucion.add(i);
                 n.setSol(solucion);
                 aux.add(n);
