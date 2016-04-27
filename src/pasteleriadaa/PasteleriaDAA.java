@@ -150,6 +150,20 @@ public class PasteleriaDAA {
 
     private static Nodo generarSol() {
         Nodo nodo = new Nodo();
+//        LinkedList<Integer> usados = new LinkedList<>();
+//        int peso = 0;
+//        for (int i  : pedido) {
+//            for (int j = 0; j < pasteleros; j++) {
+//                if (!usados.contains(j)) {
+//                    
+//                }
+//                int aux = tablaBeneficios[j][pedido[i]-1];
+//                if (aux > peso) {
+//                    peso = aux;
+//                    
+//                }
+//            }
+//        }
         for (int i = 0; i < pasteleros; i++) {
             nodo.getSol().add(i);
         }
