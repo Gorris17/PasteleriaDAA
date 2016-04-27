@@ -115,14 +115,22 @@ public class PasteleriaDAA {
     }
 
     private static int cotaSuperior(Nodo sol) {
-        int aux = sol.getBeneficio() + sol.getPeso();
-        for (int i = 0; i < pasteleros; i++) {
-            for (int j = sol.getNivel(); j < pasteleros; j++) {
-                if (!sol.getSol().contains(i)) 
-                aux+=tablaBeneficios[i][pedido[j]-1];
+        int past = 0;
+        int cota = sol.getBeneficio() + sol.getPeso();
+        LinkedList<Integer> usados = (LinkedList) sol.getSol().clone();
+        for (int i = sol.getNivel(); i < pedido.length; i++) {
+            int peso = 0;
+            for (int j = 0; j < pasteleros; j++) {
+                int aux = tablaBeneficios[j][pedido[i]-1];
+                if (!usados.contains(j) && aux > peso) {
+                    peso = aux;
+                    past = j;                    
+                }
             }
+            usados.add(past);
+            cota += peso;
         }
-        return aux;
+        return cota;
     }
 
     private static LinkedList<Nodo> complecciones(Nodo sol) {
