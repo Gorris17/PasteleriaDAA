@@ -15,10 +15,18 @@ public class PasteleriaDAA {
     public static void main(String[] args) throws IOException {
         if (args.length > 0) {
             cargar(args[0]);
-            RyP ();
-            if (args.length == 2) 
-                guardar(args[1]);
-            else mostrarPantalla(); 
+            if (args.length > 1){
+               if (!salidaExiste(args[1])) {
+                   RyP (); 
+                   guardar(args[1]);
+               } else System.err.println("El archivo de salida ya existe");
+            } else {
+                long tiempoIni = System.nanoTime();
+                RyP();
+                long tiempoTotal = System.nanoTime() - tiempoIni;
+                mostrarPantalla();
+                System.out.println(tiempoTotal/1000000 + " ms");
+            } 
         } else System.err.println("Introduce fichero de entrada.");
     }
     
@@ -53,21 +61,17 @@ public class PasteleriaDAA {
         //Comprobamos si el fichero existe
         File archivo = new File(fichero);
         BufferedWriter bw;
-        if (archivo.exists()) {
-            System.err.println("El fichero de salida ya existe");
-        } else {
-            try{
-                bw = new BufferedWriter(new FileWriter(archivo));
-                for (int i = 0; i < resultado.size() - 1; i++) {
-                    bw.write(resultado.get(i)+1 + ",");
-                }
-                bw.write(Integer.toString(resultado.get(resultado.size() - 1)+1));
-                bw.newLine();                
-                bw.write(Integer.toString(beneficio));
-                bw.close();
-            } catch (Exception ex) {
-                System.err.println("Error Salida: " + ex.getMessage());
+        try{
+            bw = new BufferedWriter(new FileWriter(archivo));
+            for (int i = 0; i < resultado.size() - 1; i++) {
+                bw.write(resultado.get(i)+1 + ",");
             }
+            bw.write(Integer.toString(resultado.get(resultado.size() - 1)+1));
+            bw.newLine();                
+            bw.write(Integer.toString(beneficio));
+            bw.close();
+        } catch (Exception ex) {
+            System.err.println("Error Salida: " + ex.getMessage());
         }
     }
 
@@ -81,14 +85,13 @@ public class PasteleriaDAA {
 
     
     public static void RyP(){
-        
         Nodo    sol           =   new Nodo();
         Nodo    solFin        =   generarSol();
         int     cotaInferior  =   cotaSuperior(solFin);
         
         PriorityQueue q = new PriorityQueue();
         q.add(sol);
-        
+        int cont = 0;
         while (!q.isEmpty()) {
             sol = (Nodo) q.remove();  
             if (esSolucion(sol)) {
@@ -97,7 +100,7 @@ public class PasteleriaDAA {
                 }
             } else if (cotaSuperior(sol) >= cotaInferior) {
                 for (Nodo n : complecciones(sol)) {
-                    if (cotaSuperior(n)>= cotaInferior && esFactible(n)) {
+                    if (cotaSuperior(n)>= cotaInferior) {
                         q.add(n);
                     }
                 }
@@ -148,11 +151,7 @@ public class PasteleriaDAA {
         }
         return aux;
     }
-
-    private static boolean esFactible(Nodo n) {
-        return true;
-    }
-
+    
     private static Nodo generarSol() {
         Nodo nodo = new Nodo();
         LinkedList<Integer> usados = new LinkedList<>();
@@ -181,4 +180,11 @@ public class PasteleriaDAA {
         nodo.setBeneficio(beneficio);
         return nodo;
     }    
+
+    private static boolean salidaExiste(String arg) {
+        File salida = new File (arg);
+        return salida.exists();
+    }
+
+    
 }
