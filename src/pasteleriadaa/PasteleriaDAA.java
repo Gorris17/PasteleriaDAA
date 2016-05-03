@@ -97,6 +97,7 @@ public class PasteleriaDAA {
             if (esSolucion(sol)) {
                 if (cotaSuperior(sol) >= cotaInferior) {
                     solFin=sol;
+                    cotaInferior = cotaSuperior(sol);
                 }
             } else if (cotaSuperior(sol) >= cotaInferior) {
                 for (Nodo n : complecciones(sol)) {
@@ -104,7 +105,6 @@ public class PasteleriaDAA {
                         q.add(n);
                     }
                 }
-                cotaInferior = cotaSuperior(sol);
             } 
         }
         beneficio = cotaSuperior(solFin);
@@ -184,7 +184,5 @@ public class PasteleriaDAA {
     private static boolean salidaExiste(String arg) {
         File salida = new File (arg);
         return salida.exists();
-    }
-
-    
+    } 
 }
